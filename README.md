@@ -1,12 +1,12 @@
 # JsonPro
 Managing JSON files: extracting, changing, adding, deleting data.
-___
+
 ![](https://img.shields.io/badge/PHP-5.6-blue)
 ## Installation
 ```
 composer require mixno35/json-pro
 ```
-___
+
 ## Using
 ### Initialization
 Create a new instance of the class and initialize it by passing the path to the JSON file, use the `init` method:
@@ -79,4 +79,3 @@ try {
 JsonPro can throw the following exceptions:
 - `InvalidArgumentException`: If invalid arguments are passed (for example, an empty string as a path).
 - `Exception`: If the file cannot be read, does not exist, is not valid JSON, or the directory is not writable/readable.
-___
