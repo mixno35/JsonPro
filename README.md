@@ -2,6 +2,7 @@
 Managing JSON files: extracting, changing, adding, deleting data.
 
 ![](https://img.shields.io/badge/PHP-5.6-blue)
+![](https://img.shields.io/packagist/dt/mixno35/json-pro)
 ## Installation
 ```
 composer require mixno35/json-pro
