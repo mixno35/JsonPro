@@ -7,6 +7,9 @@ use http\Exception\InvalidArgumentException;
 
 class JsonPro {
 
+    const JSON_PRO_SET_TYPE_OVERWRITE = 0;
+    const JSON_PRO_SET_TYPE_APPEND = 1;
+
     /**
      * @var string
      */
@@ -31,6 +34,11 @@ class JsonPro {
         }
 
         $this->path = $path;
+
+        if (!file_exists($path)) {
+            file_put_contents($path, "{}");
+        }
+
         $this->var = $this->read($use_include_path);
     }
 
@@ -123,14 +131,17 @@ class JsonPro {
     }
 
     /**
-     * Sets a value in the JSON structure at the specified key path.
+     * Sets a value in the JSON structure at the specified key path, either by overwriting or appending.
      *
      * @param array $key_path An array of keys representing the path where the value should be set.
      * @param mixed $value The value to set at the specified key path.
-     * @return void
-     * @throws Exception If the key path is invalid or cannot be set.
+     * @param int $type The type of operation: use `JSON_PRO_SET_TYPE_OVERWRITE` to overwrite the value,
+     * or `JSON_PRO_SET_TYPE_APPEND` to append to the existing value. Defaults to overwrite.
+     * @return bool Returns true on success, or false if the operation type is invalid.
+     *
+     * @throws InvalidArgumentException If the key path is not an array.
      */
-    public function set($key_path = [], $value = null) {
+    public function set($key_path = [], $value = null, $type = self::JSON_PRO_SET_TYPE_OVERWRITE) {
         if (!is_array($key_path)) {
             throw new InvalidArgumentException("The key path must be an array.");
         }
@@ -142,7 +153,16 @@ class JsonPro {
             }
             $temp = &$temp[$key];
         }
-        $temp = $value;
+
+        if ($type === self::JSON_PRO_SET_TYPE_OVERWRITE) {
+            $temp = $value;
+            return true;
+        } else if ($type === self::JSON_PRO_SET_TYPE_APPEND) {
+            $temp .= $value;
+            return true;
+        }
+
+        return false; // Return false if an invalid type is provided
     }
 
     /**
@@ -175,5 +195,31 @@ class JsonPro {
         }
 
         return $result;
+    }
+
+
+    /**
+     * Checks if a value exists at the specified key path in the JSON structure.
+     *
+     * @param array $key_path An array of keys representing the path to check for the value.
+     * @return bool Returns true if the value exists at the specified key path, false otherwise.
+     *
+     * @throws InvalidArgumentException If the provided key path is not an array.
+     */
+    public function has($key_path = []) {
+        if (!is_array($key_path)) {
+            throw new InvalidArgumentException("The key path must be an array.");
+        }
+
+        $temp = &$this->var;
+        foreach ($key_path as $key) {
+            if (isset($temp[$key])) {
+                $temp = &$temp[$key];
+            } else {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
