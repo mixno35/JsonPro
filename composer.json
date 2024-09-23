@@ -1,0 +1,22 @@
+{
+    "name": "mixno35/json-pro",
+    "description": "Managing JSON files: extracting, changing, adding, deleting data.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Mixno35\\JsonPro\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Alexander Mikhno",
+            "role": "Main Developer",
+            "homepage": "https://mixno35.t.me",
+            "email": "mixno35@yandex.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6"
+    }
+}
