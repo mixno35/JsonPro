@@ -42,6 +42,21 @@ To delete a value, use the `delete` method:
 ```php
 $json->delete(['key1', 'key2']);
 ```
+### Has data
+Check if the key is in json. The `has` method is available starting with the release ![](https://img.shields.io/badge/release-v1.1-blue). Use the `has` method:
+```php
+if ($json->has()) {
+    // Return true
+}
+
+if ($json->has(['key1'])) {
+    // Return true
+}
+
+if ($json->has(['key1', 'key2', 'key3'])) {
+    // Return false
+}
+```
 ### Saving data
 By default, all your created changes using the `set` and `delete` methods are not saved, to save the changes, use the `save` method:
 ```php
