@@ -81,10 +81,12 @@ try {
     echo PHP_EOL;
 
     // Write data
-    $json->set(['key1'], 'newValue');
-    // {"key1": "newValue"}
-    $json->set(['key1', 'key2'], 'newValue');
-    // {"key1": {"key2": "newValue"}}
+    if ($json->has(['key1']) === false) {
+        $json->set(['key1'], 'newValue');
+        // {"key1": "newValue"}
+        $json->set(['key1', 'key2'], 'newValue');
+        // {"key1": {"key2": "newValue"}}   
+    }
 
     // Deleting data
     $json->delete(['key1', 'key2']);
